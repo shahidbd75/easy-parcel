@@ -1,5 +1,5 @@
 import express from 'express';
-import models from "../models";
+import {saveUser} from "../services/userService";
 
 const router = express.Router();
 
@@ -9,17 +9,10 @@ const getHandler = (req,res) => {
     res.send('Hello Viewers: ' + param.id);
 };
 
-const postHandler = (req,res) => {
+const postHandler = async (req,res) => {
     const body = req.body;
-    const user =  new models.User({
-        username: body.username,
-        createdAt: new Date()
-    });
-    user.save().then((savedUser) => {
-        res.status(201).send('User saved. id = ' + savedUser._id);
-    }).catch((error) => {
-        res.status(500).send(error);
-    });
+    const user = await saveUser(body); 
+    res.send(user._id);
 };
 
 router.post('/', postHandler);
