@@ -10,6 +10,10 @@ export class GeneralError extends Error {
 }
 
 export class BadRequest extends GeneralError {
+    constructor(message) {
+        super(message);
+        this.name = 'Bad Request';
+    }
     getCode() {
         return 400;
     }
