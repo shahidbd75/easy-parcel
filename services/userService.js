@@ -8,10 +8,7 @@ export const getAllUsers = async () => {
 };
 
 export const saveUser = async (userModel) => {
-    const user =  new models.User({
-        username: userModel.username,
-        createdAt: new Date()
-    });
+    const user =  new models.User(userModel);
     return await user.save();
 };
 
