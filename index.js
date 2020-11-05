@@ -1,5 +1,5 @@
 import express from 'express';
-import connectToDb from './mongo';
+import { connectToDb, uri } from './mongo';
 import configure from "./controllers";
 import { handleErrors }  from "./middlewares/handleErrors";
 import winston from 'winston';
@@ -40,20 +40,52 @@ const fileInfoTransport = new (winston.transports.DailyRotateFile)({
     datePattern: 'yyyy-MM-DD-HH'
 });
 
+const fileErrorTransport = new (winston.transports.DailyRotateFile)({
+    filename: 'log-error-%DATE%.log',
+    datePattern: 'yyyy-MM-DD-HH'
+});
+
+const mongoErrorTransport = new winston.transports.MongoDB({
+    db: uri,
+    metaKey:'meta'
+});
+
+const elasticSearchOptions = {
+    level: 'error',
+    clientOpts: { node: 'http://localhost:9200'},
+    indexPrefix: 'log=parcelexp'
+};
+
+const esTransport = new (ElasticsearchTransport)(elasticSearchOptions);
+
 const infoLogger = expressWinston.logger({
     transports: [
         new winston.transports.Console(),
-        fileInfoTransport
+        fileInfoTransport,
+        esTransport
     ],
     format: winston.format.combine(winston.format.colorize(),winston.format.json()),
     meta:false,
     msg: getMessage
 });
 
+const errorLogger = expressWinston.errorLogger({
+    transports: [
+        new winston.transports.Console(),
+        fileErrorTransport,
+        mongoErrorTransport,
+        esTransport
+    ],
+    format: winston.format.combine(winston.format.colorize(),winston.format.json()),
+    meta:true,
+    msg: '{"correlationId": {{req.headers["x-correlation-id"]}}, "error": {{err.message}}}'
+});
+
 app.use(infoLogger);
 
 configure(app);
 
+app.use(errorLogger);
 app.use(handleErrors);
 
 app.listen(port, () => {

@@ -1,10 +1,10 @@
 import mongoose from 'mongoose';
 
-const uri = "mongodb://localhost:27017/parcelexp";
+export const uri = "mongodb://localhost:27017/parcelexp";
 
 const options = {};
 
-const connectToDb = () => {
+export const connectToDb = () => {
     mongoose.connect(uri, options,(err) => {
         if(err) {
             console.error(err);
@@ -14,5 +14,3 @@ const connectToDb = () => {
         }
     })
 }
-
-export default connectToDb;
