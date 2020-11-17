@@ -17,12 +17,12 @@ app.use(handleRequest);
 
 connectToDb();
 
-if(process.env.ENVIRONMENT !== 'DEBUG')
+if(process.env.ENVIRONMENT !== 'TEST')
     app.use(infoLogger());
 
 configure(app);
 
-if(process.env.ENVIRONMENT !== 'DEBUG')
+if(process.env.ENVIRONMENT !== 'TEST')
     app.use(errorLogger(uri));
 
 app.use(handleErrors);

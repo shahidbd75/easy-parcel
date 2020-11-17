@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -r esm server.js",
-    "test": "jest"
+    "start": "nodemon -r esm ./src/server.js",
+    "test": "jest --runInBand --force-exit"
   },
   "keywords": [
     "parcel"

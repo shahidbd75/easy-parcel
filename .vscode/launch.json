@@ -5,9 +5,23 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Attach by Process ID",
-            "processId": "${command:PickProcess}",
-            "request": "attach",
+            "internalConsoleOptions": "neverOpen",
+            "name": "Jest Tests",
+            "request": "launch",
+            "runtimeArgs": [
+                "--inspect-brk",
+                "${workspaceFolder}/node_modules/jest/bin/jest.js",
+                "--runInBand",
+                "--force-exit"
+            ],
+            "type": "node",
+            "port": 9229,
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Launch Program",
+            "program": "${workspaceFolder}\\index.js",
+            "request": "launch",
             "skipFiles": [
                 "<node_internals>/**"
             ],
