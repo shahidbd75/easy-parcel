@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon -r esm server.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "keywords": [
     "parcel"
@@ -13,19 +13,24 @@
   "author": "shahid",
   "license": "ISC",
   "dependencies": {
-    "@babel/core": "^7.12.3",
-    "@babel/preset-env": "^7.12.1",
+    "dotenv": "^8.2.0",
     "esm": "^3.2.25",
     "express": "^4.17.1",
     "express-winston": "^4.0.5",
-    "jest": "^26.6.3",
     "joi": "^17.3.0",
     "mongoose": "^5.10.9",
     "nodemon": "^2.0.4",
-    "supertest": "^6.0.1",
     "winston": "^3.3.3",
     "winston-daily-rotate-file": "^4.5.0",
     "winston-elasticsearch": "0.10.0",
     "winston-mongodb": "5.0.5"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.3",
+    "@babel/preset-env": "^7.12.1",
+    "babel-jest": "^26.6.3",
+    "jest": "^26.6.3",
+    "superagent": "^6.1.0",
+    "supertest": "^6.0.1"
   }
 }
